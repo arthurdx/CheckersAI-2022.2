@@ -9,7 +9,7 @@
    * Em variáveis sistema escolha a opção “Path” e clique em editar;
    * Na nova janela “Editar variável de ambiente” clique no botão novo informe o caminho onde está o Python, por exemplo: “C:\Program Files\Python”;
    * Clique no botão “OK”.
-* Abra o CMD/Terminal do Windows e digite `python -v`, você verá a versão do Python instalado no seu Windows.
+* Abra o CMD/Terminal do Windows e digite `python --v`, você verá a versão do Python instalado no seu Windows.
 * Digite `pip install pygame`
 
 
