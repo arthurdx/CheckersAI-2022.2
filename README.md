@@ -1,0 +1,1 @@
+# CheckersAI-2022.2
