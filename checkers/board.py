@@ -84,6 +84,8 @@ class Board():
         for r in range(start, stop, step):
             if left < 0:
                 break
+
+
             current = self.board[r][left]
             if current == 0:
                 if skipped and not last:
@@ -101,7 +103,7 @@ class Board():
                     
                     moves.update(self._traverse_left(r+step, row, step, color, left - 1, skipped=last))
                     moves.update(self._traverse_right(r+step, row, step, color, left + 1, skipped=last))
-                    break
+                break
 
             elif current.color == color:
                 break
@@ -135,7 +137,7 @@ class Board():
                     
                     moves.update(self._traverse_left(r+step, row, step, color, right - 1, skipped=last))
                     moves.update(self._traverse_right(r+step, row, step, color, right= + 1, skipped=last))
-                    break
+                break
 
             elif current.color == color:
                 break
