@@ -1,5 +1,6 @@
 from operator import le
-from turtle import right
+from pickle import NONE
+from turtle import color, right
 import pygame
 from .piece import Piece
 from .constants import BLACK, COLS, RED, ROWS, SQUARE_SIZE, WHITE, BLUE
@@ -24,7 +25,7 @@ class Board():
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)
 
-        if row == ROWS or row == 0:
+        if row == ROWS - 1 or row == 0:
             piece.make_king()
             if piece.color == BLUE:
                 self.blue_kings += 1
@@ -62,6 +63,22 @@ class Board():
                 piece = self.board[row][col]
                 if piece != 0:
                     piece.draw(window)
+
+    def remove(self, pieces):
+        for piece in pieces:
+            self.board[piece.row][piece.col] = 0
+            if piece != 0 and piece.color == RED:
+                self.red_left -= 1
+            else:
+                self.blue_left -= 1
+
+    def winner(self):
+        if self.red_left <= 0:
+            return BLUE
+        elif self.blue_left <= 0:
+            return RED
+
+        return None
 
     def get_valid_moves(self, piece):
         moves = {}

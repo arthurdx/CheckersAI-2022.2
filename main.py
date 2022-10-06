@@ -22,6 +22,10 @@ def main():
 
     while run:
         clock.tick(FPS)
+
+        if game.winner() != None:
+            print(game.winner())
+            break
         #evento que fecha o jogo
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -30,8 +34,7 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 row, col = get_position_from_mouse(pos)
-                if game.turn == RED:
-                    game.select(row, col)
+                game.select(row, col)
            
             #desenhando o tabuleiro usando os metodos da classe board
         game.update()
