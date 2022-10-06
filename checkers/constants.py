@@ -15,3 +15,5 @@ GREY = (128,128,128)
 GREY2 = (64,64,64)
 WHITE = (202,202,202)
 GREEN = (0,255,0)
+
+CROWN = pygame.transform.scale(pygame.image.load('assets\coroa.png'), (46,46))
