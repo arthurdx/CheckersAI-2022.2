@@ -10,7 +10,7 @@
    * Na nova janela “Editar variável de ambiente” clique no botão novo informe o caminho onde está o Python, por exemplo: “C:\Program Files\Python”;
    * Clique no botão “OK”.
 * Abra o CMD/Terminal do Windows e digite `python --version`, você verá a versão do Python instalado no seu Windows.
-* Digite `pip install pygame`
+* No terminal, digite `pip install pygame`
 
 
 ## 🇺🇸 Checkers game made whit pygame and AI made whit minmax algorithm. IA Class project - CEFETMG 2022.2
