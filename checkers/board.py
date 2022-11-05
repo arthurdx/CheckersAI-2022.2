@@ -1,6 +1,3 @@
-from operator import le
-from pickle import NONE
-from turtle import color, right
 import pygame
 from .piece import Piece
 from .constants import BLACK, COLS, RED, ROWS, SQUARE_SIZE, WHITE, BLUE
@@ -87,8 +84,8 @@ class Board():
         row = piece.row
 
         if piece.color == RED or piece.king:
-            moves.update(self._traverse_left(row - 1, max(row-3, -1), -1, piece.color, left))
-            moves.update(self._traverse_right(row - 1, max(row-3, -1), -1, piece.color, right))
+            moves.update(self._traverse_left(row -1, max(row-3, -1), -1, piece.color, left))
+            moves.update(self._traverse_right(row -1, max(row-3, -1), -1, piece.color, right))
         if piece.color == BLUE or piece.king:
             moves.update(self._traverse_left(row +1, min(row+3, ROWS), 1, piece.color, left))
             moves.update(self._traverse_right(row +1, min(row+3, ROWS), 1, piece.color, right))
@@ -113,11 +110,15 @@ class Board():
                 
                 if last:
                     if step == -1:
-                        row = max(r-3, 0)
+                        row = max(r-3, -1)
                     else:
                         row = min(r+3, ROWS)
-                    moves.update(self._traverse_left(r+step, row, step, color, left-1,skipped=last))
-                    moves.update(self._traverse_right(r+step, row, step, color, left+1,skipped=last))
+                    if skipped:
+                        moves.update(self._traverse_left(r+step, row, step, color, left-1,skipped=last+skipped))
+                        moves.update(self._traverse_right(r+step, row, step, color, left+1,skipped=last+skipped))
+                    else:
+                        moves.update(self._traverse_left(r+step, row, step, color, left-1,skipped=last))
+                        moves.update(self._traverse_right(r+step, row, step, color, left+1,skipped=last))
                 break
             elif current.color == color:
                 break
@@ -146,11 +147,15 @@ class Board():
                 
                 if last:
                     if step == -1:
-                        row = max(r-3, 0)
+                        row = max(r-3, -1)
                     else:
                         row = min(r+3, ROWS)
-                    moves.update(self._traverse_left(r+step, row, step, color, right-1,skipped=last))
-                    moves.update(self._traverse_right(r+step, row, step, color, right+1,skipped=last))
+                    if skipped:
+                        moves.update(self._traverse_left(r+step, row, step, color, right-1,skipped=last+skipped))
+                        moves.update(self._traverse_right(r+step, row, step, color, right+1,skipped=last+skipped))
+                    else:
+                        moves.update(self._traverse_left(r+step, row, step, color, right-1,skipped=last))
+                        moves.update(self._traverse_right(r+step, row, step, color, right+1,skipped=last))
                 break
             elif current.color == color:
                 break
