@@ -18,6 +18,26 @@ class Board():
                 pygame.draw.rect(window, WHITE, (row*SQUARE_SIZE, col*SQUARE_SIZE
                 , SQUARE_SIZE, SQUARE_SIZE))
 
+    def evaluate(self):
+        blue_corner_piece = 0
+        blue_sideways_piece = 0
+        red_corner_piece = 0
+        red_sideways_piece = 0
+        return self.blue_left - self.red_left + (self.blue_kings * 0.5 + self.red_kings * 0.5) + (
+            (red_corner_piece + red_sideways_piece)*0.3) + (
+                (blue_corner_piece + blue_sideways_piece)*0.3)
+
+    def get_all_pieces(self, color):
+        pieces = []
+        for row in self.board:
+            for piece in row:
+                if piece != 0 and piece.color == color:
+                    pieces.append(piece)
+        return pieces
+
+    
+
+
     def move(self, piece, row, col):
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col], self.board[piece.row][piece.col]
         piece.move(row, col)

@@ -25,7 +25,7 @@ def main():
 
         if game.winner() != None:
             print(game.winner())
-            break
+            run = False
         #evento que fecha o jogo
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -40,7 +40,6 @@ def main():
         game.update()
 
          
-
     pygame.quit()
 
 main()
