@@ -1,7 +1,8 @@
 import pygame
-from checkers.constants import RED, SQUARE_SIZE, WIDTH, HEIGHT 
+from checkers.constants import BLUE, RED, SQUARE_SIZE, WIDTH, HEIGHT 
 from checkers.board import Board
 from checkers.game import Game
+from minmax.algorithm import minmax
 
 FPS = 60
 #desenhando a janela onde o jogo ira rodar
@@ -15,6 +16,7 @@ def get_position_from_mouse(pos):
     return row, col
 
 def main():
+    pygame.init()
     #loop que mantem a janela do jogo aberta
     run = True
     clock = pygame.time.Clock()
@@ -23,14 +25,19 @@ def main():
     while run:
         clock.tick(FPS)
 
+        if game.turn == BLUE:
+            value, new_board = minmax(game.get_board(), 1, BLUE, game)
+            game.ai_move(new_board)
+
         if game.winner() != None:
             print(game.winner())
             run = False
+
         #evento que fecha o jogo
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-            # eventos de click de mouse ainda a ser definidos
+            # eventos de click de mouse para selecionar peça
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
                 row, col = get_position_from_mouse(pos)

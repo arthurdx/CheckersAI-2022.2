@@ -1,6 +1,6 @@
 import pygame
-from .piece import Piece
-from .constants import BLACK, COLS, RED, ROWS, SQUARE_SIZE, WHITE, BLUE
+from checkers.piece import Piece
+from checkers.constants import BLACK, COLS, RED, ROWS, SQUARE_SIZE, WHITE, BLUE
 
 #definindo a classe tabuleiro
 
@@ -9,7 +9,10 @@ class Board():
         self.board = [[]]
         self.red_left = self.blue_left = 12
         self.red_kings = self.blue_kings = 0
+        self.get_corner_piece(BLUE)
+        self.get_corner_piece(RED)
         self.create_board()
+        self.winner()
 #criando o quadriculado do tabuleiro 
     def draw_squares(self, window):
         window.fill(BLACK)
@@ -18,14 +21,11 @@ class Board():
                 pygame.draw.rect(window, WHITE, (row*SQUARE_SIZE, col*SQUARE_SIZE
                 , SQUARE_SIZE, SQUARE_SIZE))
 
-    def evaluate(self):
-        blue_corner_piece = 0
-        blue_sideways_piece = 0
-        red_corner_piece = 0
-        red_sideways_piece = 0
-        return self.blue_left - self.red_left + (self.blue_kings * 0.5 + self.red_kings * 0.5) + (
-            (red_corner_piece + red_sideways_piece)*0.3) + (
-                (blue_corner_piece + blue_sideways_piece)*0.3)
+    def heuristic(self):
+         self.get_corner_piece(RED)
+         self.get_corner_piece(BLUE)
+         return self.blue_left - self.red_left + (self.blue_kings * 0.5 - self.red_kings * 0.5) + (
+            self.blue_corner * 0.3 - self.red_corner * 0.3)
 
     def get_all_pieces(self, color):
         pieces = []
@@ -35,7 +35,16 @@ class Board():
                     pieces.append(piece)
         return pieces
 
-    
+    def get_corner_piece(self, color):
+        cornered = 0
+        for piece in self.get_all_pieces(color):
+            if piece.col == 0 or piece.col == COLS -1:
+                cornered += 1
+        if color == RED:
+            self.red_corner = cornered
+        else:
+            self.blue_corner = cornered
+
 
 
     def move(self, piece, row, col):
@@ -84,16 +93,17 @@ class Board():
     def remove(self, pieces):
         for piece in pieces:
             self.board[piece.row][piece.col] = 0
-            if piece != 0 and piece.color == RED:
-                self.red_left -= 1
-            else:
-                self.blue_left -= 1
+            if piece != 0:
+                if piece.color == RED:
+                    self.red_left -= 1
+                else:
+                    self.blue_left -= 1
 
     def winner(self):
         if self.red_left <= 0:
-            return BLUE
+            return "Azul venceu"
         elif self.blue_left <= 0:
-            return RED
+            return "Vermelho venceu"
 
         return None
 
