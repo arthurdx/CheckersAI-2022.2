@@ -3,6 +3,7 @@ from checkers.constants import BLUE, RED, SQUARE_SIZE, WIDTH, HEIGHT
 from checkers.board import Board
 from checkers.game import Game
 from minmax.algorithm import minmax
+from alphabeta.algorithm import alpha_beta
 
 FPS = 60
 #desenhando a janela onde o jogo ira rodar
@@ -25,9 +26,15 @@ def main():
     while run:
         clock.tick(FPS)
 
+        #IA jogando com o minmax prevendo 1 jogada
         if game.turn == BLUE:
             value, new_board = minmax(game.get_board(), 1, BLUE, game)
             game.ai_move(new_board)
+
+        #IA jogando com poda alpha beta prevendo 3 jogadas
+        # if game.turn == BLUE:
+        #     value, new_board = alpha_beta(game.get_board(), 3, '-inf', 'inf', BLUE, game)
+        #     game.ai_move(new_board)
 
         if game.winner() != None:
             print(game.winner())
