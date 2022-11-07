@@ -26,14 +26,14 @@ def main():
     while run:
         clock.tick(FPS)
 
-        #IA jogando com o minmax prevendo 1 jogada
+        #IA jogando com o minmax prevendo 3 jogadas
         if game.turn == BLUE:
-            value, new_board = minmax(game.get_board(), 1, BLUE, game)
+            value, new_board = minmax(game.get_board(), 3, BLUE, game)
             game.ai_move(new_board)
 
         #IA jogando com poda alpha beta prevendo 3 jogadas
         # if game.turn == BLUE:
-        #     value, new_board = alpha_beta(game.get_board(), 3, '-inf', 'inf', BLUE, game)
+        #     value, new_board = alpha_beta(game.get_board(), 3, float('-inf'), float('inf'), BLUE, game)
         #     game.ai_move(new_board)
 
         if game.winner() != None:

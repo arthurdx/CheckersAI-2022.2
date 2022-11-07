@@ -9,21 +9,24 @@ def alpha_beta(position, depth, alpha, beta, max_player, game):
         return position.heuristic(), position
 
     if max_player:
-        maxEval = float('-inf')
+        max_eval = float('-inf')
         best_move = None
         for move in get_all_moves(position, BLUE, game):
-            eval = alpha_beta(move, depth -1, alpha, beta, True, game)
-            maxEval = max(maxEval, eval)
+            eval = alpha_beta(move, depth - 1, alpha, beta, True, game)[0]
+            max_eval = max(max_eval, eval)
             alpha = max(alpha, eval)
             if beta <= alpha:
                 break
-        return maxEval, best_move
+        best_move = move
+        return max_eval, best_move
     else:
-        minEval = float('inf')
+        min_eval = float('inf')
         best_move = None
         for move in get_all_moves(position, RED, game):
-            eval = alpha_beta(move, depth - 1, alpha, beta, False, game)
-            minEval = min(minEval, eval)
+            eval = alpha_beta(move, depth - 1, alpha, beta, False, game)[0]
+            min_eval = min(min_eval, eval)
+            beta = min(beta, eval)
             if beta <= alpha:
                 break
-        return minEval, best_move
+        best_move = move
+        return min_eval, best_move

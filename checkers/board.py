@@ -24,7 +24,7 @@ class Board():
     def heuristic(self):
          self.get_corner_piece(RED)
          self.get_corner_piece(BLUE)
-         return self.blue_left - self.red_left + (self.blue_kings * 0.5 - self.red_kings * 0.5) + (
+         return (self.blue_left - self.red_left) + (self.blue_kings * 0.5 - self.red_kings * 0.5) + (
             self.blue_corner * 0.3 - self.red_corner * 0.3)
 
     def get_all_pieces(self, color):
@@ -104,8 +104,8 @@ class Board():
             return "Azul venceu"
         elif self.blue_left <= 0:
             return "Vermelho venceu"
-
-        return None
+        else:
+            return None
 
     def get_valid_moves(self, piece):
         moves = {}

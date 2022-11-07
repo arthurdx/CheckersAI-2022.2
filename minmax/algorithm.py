@@ -3,6 +3,7 @@ import pygame
 
 from checkers.constants import RED, BLUE
 
+
 def minmax(position, depth, max_player, game):
     if depth == 0 or position.winner() != None:
         return position.heuristic(), position
@@ -42,7 +43,7 @@ def get_all_moves(board, color, game):
     for piece in board.get_all_pieces(color):
         valid_moves = board.get_valid_moves(piece)
         for move, skip in  valid_moves.items():
-            # draw_moves(game, board, piece)
+            #draw_moves(game, board, piece) 
             temp_board = deepcopy(board)
             temp_piece = temp_board.get_piece(piece.row, piece.col)
             new_board = simulate_move(temp_piece, move, temp_board, game, skip)
@@ -62,4 +63,4 @@ def draw_moves(game, board, piece):
         board.blue_corner * 0.3 - board.red_corner * 0.3)), True, (180, 60, 0))
     game.window.blit(text, (piece.x, piece.y))
     pygame.display.update()
-    pygame.time.delay(400)
+    pygame.time.delay(100)
